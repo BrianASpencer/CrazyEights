@@ -2,17 +2,13 @@ from random import randint
 
 class Game:
     # constructor
-    def __init__(self, _number, id1, id2):
+    def __init__(self, _number):
         self.number = _number
         self.deck = Deck(1)
         self.dPile = Deck(0)
         p = random.randint(0, 1)
-        if p == 1:
-            self.p1 = Player("Player 1", id1)
-            self.p2 = Player("Player 2", id2)
-        else:
-            self.p1 = Player("Player 1", id2)
-            self.p2 = Player("Player 2", id1)
+        self.p1 = Player("Player 1", id1)
+        self.p2 = Player("Player 2", id2)
         self.startGame()
 
     def startGame(self):
