@@ -9,20 +9,58 @@ class Game:
         p = random.randint(0, 1)
         self.p1 = Player("Player 1", id1)
         self.p2 = Player("Player 2", id2)
+        self.currSuite = ""
+        self.currValue = ""
         self.startGame()
 
     def startGame(self):
         #need to make discard pile iwth one faceup card
         #if its an 8, reshuffle it into deck and pick another
-        return
-    
-    def isValidMove(player, move):
-        for i in range(0, player.handLength()):
-            if player.hand[i]
-            if player.hand[i] == move:
-                if player.hand[i].value == "8":
+        #initialize value for currSuite and currValue
+        fCard = self.deck.cards.pop()
+        if fCard.value == "8":
+            self.deck.cards.append(fCard)
+            self.deck.shuffle()
+            while True:
+                fCard = self.deck.cards.pop()
+                if fCard.value != "8":
+                    break
+        self.dPile.cards.append(fCard)
+        self.currValue = self.dPile.topValue()
+        self.currSuite = self.dPile.topSuite()
 
-                elif player.hand[i].value == self.currSuite:
+    
+    def isValidMove(self, player, move):
+        if move.upper() == "D":
+            player.hand.append(self.deck.cards.pop())
+            return True
+        for i in range(0, player.handLength()):
+            if player.hand[i] == move:
+                #if they play an 8, they must choose a new suit
+                if player.hand[i].value == "8":
+                    self.dPile.cards.append(hand[i])
+                    player.hand.remove(player.hand[i])
+                    self.currValue = "8"
+                    flag = True
+                    while flag:
+                        suits = ["C", "D", "H", "S"]
+                        s = input('Enter the new suit (C, D, H, S): ')
+                        if len(s) == 1:
+                            for i in range(0, len(suits)):
+                                if s == suits[i]:
+                                    self.currSuite = s
+                                    flag = False
+                                    break
+                #otherwise, the current suit is the suit of the played card
+                elif player.hand[i].suit == self.currSuite:
+                    self.dPile.cards.append(hand[i])
+                    player.hand.remove(player.hand[i])
+                    self.currValue = player.hand[i].value
+                    return True
+                elif player.hand[i].value == self.currValue:
+                    self.dPile.cards.append(hand[i])
+                    player.hand.remove(player.hand[i])
+                    self.currSuite = player.hand[i].suit
                     return True
         return False
         
@@ -37,9 +75,6 @@ class Player:
 
     def handLength(self):
         return len(self.hand)
-
-    def draw(self, deck):
-        self.hand.append(deck.drawCard())
 
     def showHand(self):
         for card in self.hand:
@@ -60,9 +95,9 @@ class Deck:
         self.shuffle()
 
     def shuffle(self):
-    for i in range(len(deck) -1, 0, -1):
-        swap = random.randint(0, i)
-        self.deck[i], self.deck[swap] = self.deck[swap], self.deck[i]
+        for i in range(len(deck) -1, 0, -1):
+            swap = random.randint(0, i)
+            self.deck[i], self.deck[swap] = self.deck[swap], self.deck[i]
 
     def recharge(self, dPile):
         for i in range(len(dPile) -1, 0, -1):
@@ -71,6 +106,13 @@ class Deck:
 
     def isEmpty(self):
         return(len(self.cards)==0)
+
+    def topValue(self):
+        if not self.isEmpty():
+            return self.cards[len(self.cards)-1].value
+    def topSuite(self):
+        if not self.isEmpty():
+            return self.cards[len(self.cards)-1].suit
 
     def draw(self, dPile):
         if not isEmpty:
@@ -101,50 +143,3 @@ class Card:
             print(x, " of Hearts")
         else:
             print(x, " of Spades")
-
-
-
-while True:
-    openingCard = deck.pop()
-    if openingCard.startswith('8'):
-        deck.append(openingCard)
-    else:
-        break
-
-
-discardPile.append(openingCard)
-
-print(deck)
-print(discardPile)
-
-turn = r = random.randint(0, 1)
-
-if turn == 0:
-    p1 = Player()
-    p1.turn = True
-    p2 = Player()
-else:
-    p2 = Player()
-    p2.turn = True
-    p1 = Player()
-
-
-if p1.turn:
-    while True:
-        if move == "DC":
-            draw = deck.pop()
-            p1.hand.append(draw)
-        elif validMove(p1.hand[move], openingCard[len(openingCard)-1]):
-            openingCard.append(p1.hand[move])
-            p1.hand.remove(p1.hand[move])
-            break
-elif p2.turn:
-    while True:
-        if len(deck) == 0:
-        if move == "DC":
-            draw = deck.pop()
-            p2.hand.append(draw)
-        elif validMove(p1.hand[move], openingCard[len(openingCard)-1]):
-            openingCard.append(p2.hand[move])
-            p2.hand.remove(p2.hand[move])
-            break
