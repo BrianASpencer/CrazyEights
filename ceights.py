@@ -12,6 +12,19 @@ class Game:
         self.startGame()
 
     def startGame(self):
+        #need to make discard pile iwth one faceup card
+        #if its an 8, reshuffle it into deck and pick another
+        return
+    
+    def isValidMove(player, move):
+        for i in range(0, player.handLength()):
+            if player.hand[i]
+            if player.hand[i] == move:
+                if player.hand[i].value == "8":
+
+                elif player.hand[i].value == self.currSuite:
+                    return True
+        return False
         
         
 
@@ -43,7 +56,7 @@ class Deck:
     def buildDeck(self):
         for i in ["C", "D", "H", "S"]:
             for j in range(1, 14):
-                self.cards.append(Card(j, i))
+                self.cards.append(Card(str(j), i))
         self.shuffle()
 
     def shuffle(self):
@@ -135,8 +148,3 @@ elif p2.turn:
             openingCard.append(p2.hand[move])
             p2.hand.remove(p2.hand[move])
             break
-
-
-
-
-
