@@ -1,24 +1,24 @@
-#!/usr/bin/env python
+# Brian Spencer
+# CSC 460
+# 2/6/2020
 
-import socket
-#client
+from socket import *
 
-host_name = socket.gethostname() 
-host_ip = socket.gethostbyname(host_name)
+svrIP = input('Enter your local IP address: ')
+svrPort = int(input('Enter the port number of server: ' ))
 
-TCP_IP = '157.89.5.95'
+clientSocket = socket(AF_INET, SOCK_STREAM)
+clientSocket.connect(svrIP, svrPort)
 
-TCP_PORT = 5005
+print('To select a card, type the value and suit together.')
+print('Some examples and special cases: ')
+print('1C means "Ace of Clubs"; 8S means "Eight of Spades"; 13H means "King of Hearts"')
 
-BUFFER_SIZE = 1024
+# take user input as long as it's their turn
+while turn:
+    msg = input('Play a card or draw: ')
+    if msg == '^C':
+        break;
+    clientSocket.send(message.upper())
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-s.connect((TCP_IP, TCP_PORT))
-
-while True:
-    g = input("Enter something to tell the server: ") 
-    msg = "my message is: "+str(g)
-    MESSAGE = bytes(msg, 'utf-8')
-    s.send(MESSAGE)
-    data = s.recv(BUFFER_SIZE)
+clientSocket.close()
