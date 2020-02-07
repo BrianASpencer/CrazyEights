@@ -4,9 +4,10 @@
 
 from socket import *
 import threading
+import ceight
 
 # variable to tell server to exit
-keepRunning = True
+gameNotOver = True
 
 # define a function to handle a single client
 def client(clientSocket):
@@ -28,25 +29,22 @@ def client(clientSocket):
 		clientSocket.send(currSuit)
 	# end function client()
 
-# function to handle the main server socket accept loop
+# function to handle the main game
 def listenLoop(svrPort):
 	# create the socket
-	serverSocket = socket( AF_INET, SOCK_STREAM )
-	serverSocket.bind( ('',serverPort) )
+	svrSocket = socket(AF_INET, SOCK_STREAM)
+	serverSocket.bind( ('',svrPort) )
 	#number of cleints
 	serverSocket.listen(2)
-
-	print('The server is ready to receive')
-	while keepRunning:
-		# get a connection from a client
-		connectionSocket, addr = serverSocket.accept()
+	
+	while gameNotOver:
+		connectionSocket, addr = svrSocket.accept()
 		
-		# start up a thread for that client
-		cl = threading.Thread( target=client, args=(connectionSocket,), daemon=True )
+		cl = threading.Thread(target=client, args=(connectionSocket,), daemon=True)
 		cl.start()
 
 svrPort = int(input('Enter port number for the server: ' ))
 
 #start a thread for each client that connects
-sthread = threading.Thread( target=listenLoop, args=(svrPort,), daemon=True )
+sthread = threading.Thread(target=listenLoop, args=(svrPort,), daemon=True)
 sthread.start()
