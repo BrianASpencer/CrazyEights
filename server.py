@@ -1,6 +1,7 @@
 # Brian Spencer
 # CSC 460
 # 2/6/2020
+# git repo: https://github.com/BrianASpencer/CrazyEights
 
 from socket import *
 import threading
